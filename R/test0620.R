@@ -2,35 +2,33 @@
 #' @description \code{ESizeCoHedg} calculate the Effect Size & draw the dnorm curve
 #'
 #' @importFrom stats dnorm
+#' @importFrom stats sd
+#' @importFrom utils read.csv
 #' @importFrom graphics curve
 #' @importFrom graphics legend
-#' @param m1 mean value of group 1
-#' @param m2 mean value of group 2
-#' @param n1 number of group 1
-#' @param n2 number of group 2
-#' @param s1 standard deviation of group 1
-#' @param s2 standard deviation of group 2
 #' @return Effect Size of Cohen's d & Hedges' g
 #' @export
 #' @examples
-#' # ESizeCoHedg(x1, x2)
+#' # ESizeCoHedg()
 
-ESizeCoHedg <- function(x1, x2){
+ESizeCoHedg <- function(){
 
-  m1 <- mean(x1)
-  m2 <- mean(x2)
-  n1 <- length(x1)
-  n2 <- length(x2)
-  s1 <- sd(x1)
-  s2 <- sd(x2)
+  dat <- read.csv(file.choose(), header=T)
 
-  Sp <- sqrt(((n1-1)*s1^2 + (n2-1)*s2^2)/(n1+n2))
-  d <- sqrt((m1 - m2)^2)/Sp
-  d
+  m1 <- mean(dat[,2])
+  m2 <- mean(dat[,3])
+  n1 <- length(dat[,2])
+  n2 <- length(dat[,3])
+  s1 <- sd(dat[,2])
+  s2 <- sd(dat[,3])
 
-  sp <- sqrt(((n1-1)*s1^2 + (n2-1)*s2^2)/(n1+n2-2))
-  g <- sqrt((m1 - m2)^2)/sp
-  g
+  # Cohen's d
+  Sp1 <- sqrt(((n1-1)*s1^2 + (n2-1)*s2^2)/(n1+n2))
+  d <- abs(m1 - m2)/Sp1
+
+  # Hedges' g
+  sp2 <- sqrt(((n1-1)*s1^2 + (n2-1)*s2^2)/(n1+n2-2))
+  g <- abs(m1 - m2)/sp2
 
   # x-axix settings
   xmn <- min(c(m1,m2))-max(c(s1,s2))*4
