@@ -38,7 +38,7 @@ ESizeCoHedg <- function(){
   xlay1 <- seq(xmn, xmx, length=n)
   mx1 <- max( dnorm(xlay1,m1,s1) )
   mx2 <- max( dnorm(xlay1,m2,s2) )
-  mx <- max(mx1,mx2) * 1.2
+  mx <- max(mx1,mx2) * 1.23
 
   # draw the normal distributions
   curve(dnorm(x,m1,s1),xmn,xmx,col = "blue",lwd=1,xlab="", ylab="", ylim=c(0,mx))
